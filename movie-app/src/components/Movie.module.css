@@ -1,0 +1,69 @@
+/* General movie container styling */
+.movie {
+  display: flex; /* Allows alignment and layout adjustments */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center the content horizontally */
+  margin-right: 40px; /* Space between movie cards */
+  background-color: #1a1a1a; /* Optional: Add a background for better contrast */
+  border-radius: 10px; /* Match the border radius of the image */
+  padding: 0 20px 0px 20px;
+  width: 250px; /* Set a fixed width for consistency */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add hover effects */
+}
+
+.movie:hover {
+  transform: scale(1.05); /* Slightly enlarge the card on hover */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4); /* Enhance shadow on hover */
+}
+
+/* Image styling */
+.movie img {
+  width: 100%; /* Make the image responsive within the container */
+  height: auto; /* Maintain aspect ratio */
+
+  margin-bottom: 15px; /* Space below the image */
+}
+
+/* Title styling */
+.movie h4 {
+  margin-top: 10px; /* Space above the title */
+  font-size: 1.2rem; /* Adjust font size */
+  color: #ffffff; /* Ensure text color is readable */
+  text-align: center; /* Center-align text */
+}
+
+/* Date styling */
+.movie h7 {
+  display: block; /* Make it behave like a block element for spacing */
+  margin-top: 5px;
+  margin-bottom: 10px; /* Space between date and overview */
+  color: #aaaaaa; /* Light gray for contrast */
+  font-size: 0.9rem; /* Slightly smaller font */
+  text-align: center; /* Center-align text */
+}
+
+/* Overview styling */
+.overview {
+  font-size: 0.9rem; /* Adjust font size */
+  color: #cccccc; /* Light gray for readability */
+  margin-top: 10px; /* Space above the overview */
+  height: 40px; /* Fixed height for consistency */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Add "..." for truncated text */
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  -webkit-box-orient: vertical; /* Vertical alignment for clamping */
+  text-align: center; /* Center-align text */
+}
+
+/* Link styling */
+.movie a {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit color from parent */
+  transition: color 0.3s ease; /* Add smooth color transition */
+}
+
+.movie a:hover {
+  color: #ffcc00; /* Highlight on hover */
+}

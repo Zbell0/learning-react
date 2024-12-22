@@ -1,0 +1,20 @@
+.movies {
+  display: flex;
+}
+
+.container {
+  margin-left: 50px;
+  margin-top: 50px;
+  margin-bottom: 90px;
+}
+
+h2 {
+  margin-bottom: 60px;
+}
+
+.swipe {
+  text-align: center;
+  position: fixed;
+  bottom: 0px; /* Stick it at the bottom of the viewport */
+  left: 50%;
+}
