@@ -82,6 +82,19 @@ const Tab = styled.span<{ isActive: boolean }>`
   }
 `;
 
+const Previous = styled.span`
+  width: 60px;
+  height: 40px;
+  padding: 20px 40px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(prop) => prop.theme.textColor};
+  margin-top: 30px;
+`;
+
 interface RouteParams {
   coinId: string;
 }
@@ -156,22 +169,7 @@ function Coin() {
     ["tickers", coinId],
     () => fetchCoinTickers(coinId)
   );
-  // const [info, setInfo] = useState<InfoData>();
-  // const [priceInfo, setPriceInfo] = useState<PriceData>();
-  // const [loading, setLoading] = useState(true);
-  // useEffect(() => {
-  //   (async () => {
-  //     const infoData = await (
-  //       await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
-  //     ).json();
-  //     const priceData = await (
-  //       await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
-  //     ).json();
-  //     setInfo(infoData);
-  //     setPriceInfo(priceData);
-  //     setLoading(false);
-  //   })();
-  // }, [coinId]);
+
   const loading = infoLoading || tickerLoading;
   return (
     <Container>
@@ -180,15 +178,24 @@ function Coin() {
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </title>
       </Helmet>
-      <Header>
-        <Title>
-          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
-        </Title>
-      </Header>
+
       {loading ? (
         <Loader>Loading...</Loader>
       ) : (
         <>
+          <Link to={`/`}>
+            <Previous>Previous</Previous>
+          </Link>
+          <Header>
+            <Title>
+              {state?.name
+                ? state.name
+                : loading
+                ? "Loading..."
+                : infoData?.name}
+            </Title>
+          </Header>
+
           <Overview>
             <OverviewItem>
               <span>Rank:</span>
@@ -226,7 +233,7 @@ function Coin() {
 
           <Switch>
             <Route path={`/:coinId/price`}>
-              <Price />
+              <Price coinId={coinId} />
             </Route>
             <Route path={`/:coinId/chart`}>
               <Chart coinId={coinId} />
