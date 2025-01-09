@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import ApexChart from "react-apexcharts";
 import { fetchCoinHistory } from "../api";
+import Price from "./Price";
 
 interface chartProp {
   coinId: string;
@@ -26,17 +27,28 @@ function Chart({ coinId }: chartProp) {
     }
   );
 
+  const seriesData =
+    data?.map((data) => ({
+      x: new Date(data.time_open * 1000),
+      y: [
+        parseFloat(data.open),
+        parseFloat(data.high),
+        parseFloat(data.low),
+        parseFloat(data.close),
+      ],
+    })) || [];
+
   return (
     <div>
       {isLoading ? (
         "Loading chart..."
       ) : (
         <ApexChart
-          type="line"
+          type="candlestick"
           series={[
             {
               name: "Price",
-              data: data?.map((price) => parseFloat(price.close)) || [], // Convert strings to numbers
+              data: seriesData,
             },
           ]}
           options={{
@@ -52,41 +64,43 @@ function Chart({ coinId }: chartProp) {
               background: "transparent",
             },
             grid: {
-              show: false,
+              show: true,
+              borderColor: "grey",
             },
             yaxis: {
               show: false,
             },
             xaxis: {
-              categories: data?.map((date) => {
-                const time = new Date(date.time_close * 1000);
-                return time.toLocaleDateString();
-              }),
-              axisTicks: {
-                show: false,
-              },
+              type: "datetime",
               labels: {
-                show: false,
+                formatter: (value) => {
+                  const date = new Date(value);
+                  return date
+                    .toLocaleString("en-US", {
+                      month: "short",
+                      day: "2-digit",
+                    })
+                    .replace(",", "");
+                },
+              },
+              axisTicks: {
+                show: true,
               },
               axisBorder: {
                 show: false,
               },
             },
-            fill: {
-              type: "gradient",
-              gradient: {
-                shade: "dark",
-                type: "horizontal",
-                shadeIntensity: 0.5,
-                gradientToColors: ["#E1FFBB"],
-                opacityFrom: 1,
-                opacityTo: 1,
-                stops: [0, 50, 100],
+            plotOptions: {
+              candlestick: {
+                colors: {
+                  upward: "#4DA1A9",
+                  downward: "#9F5255",
+                },
               },
             },
             tooltip: {
               y: {
-                formatter: (value) => `$${value.toFixed()}`,
+                formatter: (value) => `$${value.toFixed(2)}`,
               },
             },
           }}

@@ -9,7 +9,7 @@ import {
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Chart from "./Chart";
-import Price from "./price";
+import Price from "./Price";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { Helmet } from "react-helmet";
@@ -26,7 +26,7 @@ const Loader = styled.span`
 
 const Container = styled.div`
   padding: 0px 20px;
-  max-width: 480px;
+  max-width: 600px;
   margin: 0 auto;
 `;
 
