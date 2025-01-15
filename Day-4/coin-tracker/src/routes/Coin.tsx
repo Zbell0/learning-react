@@ -13,6 +13,8 @@ import Price from "./Price";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { Helmet } from "react-helmet";
+import { useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../atoms";
 
 const Title = styled.h1`
   font-size: 48px;
@@ -156,6 +158,8 @@ interface PriceData {
 }
 
 function Coin() {
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
   const { coinId } = useParams<RouteParams>();
   const { state } = useLocation<RouteState>();
   const priceMatch = useRouteMatch("/:coinId/price");
@@ -174,6 +178,7 @@ function Coin() {
   return (
     <Container>
       <Helmet>
+        <button onClick={toggleDarkAtom}></button>
         <title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </title>
