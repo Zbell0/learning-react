@@ -5,5 +5,4 @@ export const darkTheme: DefaultTheme = {
   textColor: "whitesmoke",
   accentColor: "#9c88ff",
   cardBgColor: "transparnet",
-  borderColor: "whitesmoke",
 };

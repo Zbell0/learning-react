@@ -10,8 +10,9 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <RecoilRoot>
-    <ThemeProvider theme={darkTheme}></ThemeProvider>
-
-    <App />
+    <ThemeProvider theme={darkTheme}>
+      {" "}
+      <App />
+    </ThemeProvider>
   </RecoilRoot>
 );
