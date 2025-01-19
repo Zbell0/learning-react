@@ -75,6 +75,7 @@ function Chart({ coinId }: chartProp) {
             },
             xaxis: {
               type: "datetime",
+              tickAmount: seriesData.length,
               labels: {
                 formatter: (value) => {
                   const date = new Date(value);

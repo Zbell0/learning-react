@@ -6,6 +6,9 @@ import { fetchCoins } from "../api";
 import { Helmet } from "react-helmet";
 import { useSetRecoilState } from "recoil";
 import { isDarkAtom } from "../atoms";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+import { symbol } from "prop-types";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -55,6 +58,8 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
+const Toggle = styled.button``;
+
 interface ICoin {
   id: string;
   name: string;
@@ -73,12 +78,18 @@ function Coins() {
   return (
     <Container>
       <Helmet>
-        <title>Coin</title>
+        <title>Coins</title>
       </Helmet>
+
       <Header>
         <Title>Coin</Title>
-        <button onClick={toggleDarkAtom}>Toggle Mode</button>
+        <FontAwesomeIcon
+          onClick={toggleDarkAtom}
+          style={{ fontSize: "x-large", cursor: "pointer", padding: "10px" }}
+          icon={isDarkAtom ? faSun : faMoon}
+        />
       </Header>
+
       {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (

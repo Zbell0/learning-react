@@ -15,6 +15,8 @@ import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { Helmet } from "react-helmet";
 import { useSetRecoilState } from "recoil";
 import { isDarkAtom } from "../atoms";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 
 const Title = styled.h1`
   font-size: 48px;
@@ -178,7 +180,6 @@ function Coin() {
   return (
     <Container>
       <Helmet>
-        <button onClick={toggleDarkAtom}></button>
         <title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </title>
@@ -199,6 +200,15 @@ function Coin() {
                 ? "Loading..."
                 : infoData?.name}
             </Title>
+            <FontAwesomeIcon
+              onClick={toggleDarkAtom}
+              style={{
+                fontSize: "x-large",
+                cursor: "pointer",
+                padding: "10px",
+              }}
+              icon={isDarkAtom ? faSun : faMoon}
+            />
           </Header>
 
           <Overview>
