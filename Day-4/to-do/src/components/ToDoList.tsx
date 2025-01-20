@@ -6,6 +6,7 @@ import { todo } from "node:test";
 
 function ToDoList() {
   const toDos = useRecoilValue(toDoState);
+  console.log(toDos);
 
   return (
     <div>
