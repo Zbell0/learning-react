@@ -1,7 +1,14 @@
-import { useRecoilState, useRecoilValue } from "recoil";
 import { createGlobalStyle } from "styled-components";
-import { hourSelector, minuteState } from "./atom";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from "react-beautiful-dnd";
+import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import { toDoState } from "./atom";
+
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
 html, body, div, span, applet, object, iframe,
@@ -58,7 +65,7 @@ body {
   font-weight: 300;
   font-family: 'Source Sans Pro', sans-serif;
   background-color:${(props) => props.theme.bgColor};
-  color:${(props) => props.theme.textColor};
+  color:black;
   line-height: 1.2;
 }
 a {
@@ -67,38 +74,69 @@ a {
 }
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
+const Board = styled.div`
+  background-color: ${(props) => props.theme.boardColor};
+  padding: 20px 10px;
+  border-radius: 5px;
+  min-height: 200px;
+`;
+
+const Boards = styled.div`
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(1, 1fr);
+`;
+
+const Card = styled.div`
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: ${(props) => props.theme.cardColor};
+  margin-bottom: 5px;
+`;
+
 function App() {
-  const onDragEnd = () => {};
+  const [toDos, setToDos] = useRecoilState(toDoState);
+  const onDragEnd = ({ destination, source }: DropResult) => {};
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div>
-        <Droppable droppableId="one">
-          {(magic) => (
-            <ul ref={magic.innerRef} {...magic.droppableProps}>
-              <Draggable draggableId="first" index={0}>
-                {(magic) => (
-                  <li ref={magic.innerRef} {...magic.draggableProps}>
-                    <span {...magic.dragHandleProps}>🥰</span>
-                    One
-                  </li>
-                )}
-              </Draggable>
-              <Draggable draggableId="second" index={1}>
-                {(magic) => (
-                  <li
-                    ref={magic.innerRef}
-                    {...magic.draggableProps}
-                    {...magic.dragHandleProps}
-                  >
-                    Two
-                  </li>
-                )}
-              </Draggable>
-            </ul>
-          )}
-        </Droppable>
-      </div>
-    </DragDropContext>
+    <>
+      <GlobalStyle />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Wrapper>
+          <Boards>
+            <Droppable droppableId="one">
+              {(magic) => (
+                <Board ref={magic.innerRef} {...magic.droppableProps}>
+                  {toDos.map((toDo, index) => (
+                    <Draggable key={index} draggableId={toDo} index={index}>
+                      {(magic) => (
+                        <Card
+                          ref={magic.innerRef}
+                          {...magic.draggableProps}
+                          {...magic.dragHandleProps}
+                        >
+                          {toDo}
+                        </Card>
+                      )}
+                    </Draggable>
+                  ))}
+                  {magic.placeholder}
+                </Board>
+              )}
+            </Droppable>
+          </Boards>
+        </Wrapper>
+      </DragDropContext>
+    </>
   );
 }
 
