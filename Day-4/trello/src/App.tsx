@@ -8,6 +8,7 @@ import {
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { toDoState } from "./atom";
+import DraggableCard from "./components/DraggableCard";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -97,13 +98,6 @@ const Boards = styled.div`
   grid-template-columns: repeat(1, 1fr);
 `;
 
-const Card = styled.div`
-  padding: 5px 10px;
-  border-radius: 5px;
-  background-color: ${(props) => props.theme.cardColor};
-  margin-bottom: 5px;
-`;
-
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
@@ -125,17 +119,11 @@ function App() {
               {(magic) => (
                 <Board ref={magic.innerRef} {...magic.droppableProps}>
                   {toDos.map((toDo, index) => (
-                    <Draggable key={toDo} draggableId={toDo} index={index}>
-                      {(magic) => (
-                        <Card
-                          ref={magic.innerRef}
-                          {...magic.draggableProps}
-                          {...magic.dragHandleProps}
-                        >
-                          {toDo}
-                        </Card>
-                      )}
-                    </Draggable>
+                    <DraggableCard
+                      key={toDo}
+                      index={index}
+                      toDo={toDo}
+                    ></DraggableCard>
                   ))}
                   {magic.placeholder}
                 </Board>
