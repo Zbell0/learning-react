@@ -14,18 +14,31 @@ interface IBoardProps {
   boardId: string;
 }
 
+const Title = styled.div`
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 18px;
+`;
 function Board({ toDos, boardId }: IBoardProps) {
   return (
-    <Droppable droppableId={boardId}>
-      {(magic) => (
-        <Wrapper ref={magic.innerRef} {...magic.droppableProps}>
-          {toDos.map((toDo, index) => (
-            <DraggableCard key={toDo} index={index} toDo={toDo}></DraggableCard>
-          ))}
-          {magic.placeholder}
-        </Wrapper>
-      )}
-    </Droppable>
+    <Wrapper>
+      <Title>{boardId}</Title>
+      <Droppable droppableId={boardId}>
+        {(magic) => (
+          <div ref={magic.innerRef} {...magic.droppableProps}>
+            {toDos.map((toDo, index) => (
+              <DraggableCard
+                key={toDo}
+                index={index}
+                toDo={toDo}
+              ></DraggableCard>
+            ))}
+            {magic.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </Wrapper>
   );
 }
 
