@@ -3,8 +3,9 @@ import DraggableCard from "./DraggableCard";
 import styled from "styled-components";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
-import { IToDo } from "../atom";
+import { IToDo, toDoState } from "../atom";
 import { todo } from "node:test";
+import { useSetRecoilState } from "recoil";
 
 const Wrapper = styled.div`
   background-color: ${(props) => props.theme.boardColor};
@@ -34,9 +35,9 @@ interface IAreaProps {
 const Area = styled.div<IAreaProps>`
   background-color: ${(props) =>
     props.isDraggingOver
-      ? "#48A6A7"
-      : props.draggingFromThisWith
       ? "#b6e5ea"
+      : props.draggingFromThisWith
+      ? "#48A6A7"
       : props.theme.boardColor};
   flex-grow: 1;
   transition: background-color 0.3s ease-in-out;
@@ -55,9 +56,19 @@ interface IForm {
 }
 
 function Board({ toDos, boardId }: IBoardProps) {
+  const setToDos = useSetRecoilState(toDoState);
   const { register, setValue, handleSubmit } = useForm<IForm>();
   const onValid = (data: IForm) => {
-    console.log(data);
+    const newToDo = {
+      id: Date.now(),
+      text: data.toDo,
+    };
+    setToDos((allBoards) => {
+      return {
+        ...allBoards,
+        [boardId]: [newToDo, ...allBoards[boardId]],
+      };
+    });
     setValue("toDo", "");
   };
   return (
