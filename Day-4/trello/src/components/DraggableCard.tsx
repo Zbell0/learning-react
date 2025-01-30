@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilState } from "recoil";
+import { IToDo, toDoState } from "../atom";
 
 const Card = styled.div<{ isDragging: boolean }>`
   padding: 5px 10px;
@@ -10,15 +14,54 @@ const Card = styled.div<{ isDragging: boolean }>`
     props.isDragging ? "#F2EFE7" : props.theme.cardColor};
   box-shadow: ${(props) =>
     props.isDragging ? "0px 2px 5px rgba(0,0,0,0.3)" : "none"};
+  display: flex;
+  justify-content: space-between;
 `;
 
-interface IDdraggableProps {
+interface IDraggableProps {
   toDoId: number;
   toDoText: string;
   index: number;
 }
 
-function DraggableCard({ toDoId, toDoText, index }: IDdraggableProps) {
+function DraggableCard({ toDoId, toDoText, index }: IDraggableProps) {
+  const [toDos, setToDos] = useRecoilState(toDoState);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editText, setEditText] = useState(toDoText);
+
+  const deleteBtn = () => {
+    setToDos((prev) => {
+      const newToDos = { ...prev };
+
+      for (const category in newToDos) {
+        newToDos[category] = newToDos[category].filter(
+          (toDo) => toDo.id !== toDoId
+        );
+      }
+
+      return newToDos;
+    });
+  };
+
+  const editBtn = () => {
+    setIsEditing(true);
+  };
+
+  const saveEdit = () => {
+    setToDos((prev) => {
+      const newToDos = { ...prev };
+
+      for (const category in newToDos) {
+        newToDos[category] = newToDos[category].map((toDo) =>
+          toDo.id === toDoId ? { ...toDo, text: editText } : toDo
+        );
+      }
+
+      return newToDos;
+    });
+    setIsEditing(false);
+  };
+
   return (
     <Draggable draggableId={toDoId + ""} index={index}>
       {(magic, snapshot) => (
@@ -28,7 +71,23 @@ function DraggableCard({ toDoId, toDoText, index }: IDdraggableProps) {
           {...magic.draggableProps}
           {...magic.dragHandleProps}
         >
-          {toDoText}
+          {isEditing ? (
+            <input
+              type="text"
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+            />
+          ) : (
+            <span>{toDoText}</span>
+          )}
+          <span>
+            <button onClick={deleteBtn}>
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
+            <button onClick={isEditing ? saveEdit : editBtn}>
+              <FontAwesomeIcon icon={faEdit} />
+            </button>
+          </span>
         </Card>
       )}
     </Draggable>

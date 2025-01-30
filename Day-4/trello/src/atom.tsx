@@ -19,9 +19,7 @@ interface IToDoState {
 export const toDoState = atom<IToDoState>({
   key: "toDo",
   default: {
-    "To Do ": [],
     doing: [],
-    done: [],
   },
   effects_UNSTABLE: [persistAtom],
 });
