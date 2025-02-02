@@ -73,6 +73,35 @@ const Boards = styled.div`
   gap: 20px;
 `;
 
+const Form = styled.form`
+  height: 100px;
+
+  input {
+    border: none;
+    border-radius: 3px;
+    height: 30px;
+    width: 40rem;
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  input:hover {
+    outline: none;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  button {
+    margin: 0 10px;
+    width: 50px;
+    height: 30px;
+    border: none;
+    border-radius: 2px;
+    background-color: #efe9d5;
+    cursor: pointer;
+  }
+  button:hover {
+    outline: none;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+`;
+
 interface IFormInput {
   boardName: string;
 }
@@ -127,13 +156,13 @@ function App() {
       <GlobalStyle />
       <DragDropContext onDragEnd={onDragEnd}>
         <Wrapper>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <input
               {...register("boardName", { required: true })}
               placeholder="Add a new board"
             />
             <button type="submit">add</button>
-          </form>
+          </Form>
           <Boards>
             {Object.keys(toDos).map((boardId) => (
               <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />

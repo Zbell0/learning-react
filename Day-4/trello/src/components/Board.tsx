@@ -11,9 +11,21 @@ const Wrapper = styled.div`
   background-color: ${(props) => props.theme.boardColor};
   padding: 10px 0px;
   border-radius: 5px;
-  min-height: 200px;
+  height: 300px;
   display: flex;
   flex-direction: column;
+  button {
+    border: none;
+    padding: 5px 13px;
+    background-color: #ff8383;
+    border-radius: 2px;
+    transition: box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  button:hover {
+    outline: none;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.7);
+  }
 `;
 
 interface IBoardProps {
@@ -47,10 +59,13 @@ const Area = styled.div<IAreaProps>`
 `;
 
 const Form = styled.form`
+  margin-top: 10px;
   width: 100%;
   input {
     border: none;
-    width: 100%;
+    width: 80%;
+    margin: 0px 20px;
+    padding: 3px 5px;
   }
 `;
 

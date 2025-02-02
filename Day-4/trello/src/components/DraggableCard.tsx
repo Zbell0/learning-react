@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
 import { IToDo, toDoState } from "../atom";
-import { todo } from "node:test";
-import { text } from "stream/consumers";
+import { AiOutlineCheck, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 
 const Card = styled.div<{ isDragging: boolean }>`
   padding: 5px 10px;
@@ -18,6 +16,11 @@ const Card = styled.div<{ isDragging: boolean }>`
     props.isDragging ? "0px 2px 5px rgba(0,0,0,0.3)" : "none"};
   display: flex;
   justify-content: space-between;
+`;
+
+const Btn = styled.span`
+  display: flex;
+  gap: 5px;
 `;
 
 interface IDraggableProps {
@@ -33,13 +36,11 @@ function DraggableCard({ toDoId, toDoText, index }: IDraggableProps) {
   const deleteBtn = () => {
     setToDos((prev) => {
       const newToDos = { ...prev };
-
       for (const category in newToDos) {
         newToDos[category] = newToDos[category].filter(
           (toDo) => toDo.id !== toDoId
         );
       }
-
       return newToDos;
     });
   };
@@ -50,7 +51,6 @@ function DraggableCard({ toDoId, toDoText, index }: IDraggableProps) {
   const saveEdit = () => {
     setToDos((prev) => {
       const newToDos = { ...prev };
-
       for (const category in newToDos) {
         newToDos[category] = newToDos[category].map((toDo) =>
           toDo.id === toDoId ? { ...toDo, text: editText } : toDo
@@ -71,6 +71,7 @@ function DraggableCard({ toDoId, toDoText, index }: IDraggableProps) {
         >
           {isEditing ? (
             <input
+              required
               type="text"
               value={editText}
               onChange={(e) => setText(e.target.value)}
@@ -78,14 +79,21 @@ function DraggableCard({ toDoId, toDoText, index }: IDraggableProps) {
           ) : (
             <span>{toDoText}</span>
           )}
-          <span>
+          <Btn>
             <button onClick={deleteBtn}>
-              <FontAwesomeIcon icon={faTrash} />
+              <AiOutlineDelete size={15} color="red" />
             </button>
-            <button onClick={isEditing ? saveEdit : editBtn}>
-              <FontAwesomeIcon icon={faEdit} />
+            <button
+              onClick={isEditing ? saveEdit : editBtn}
+              disabled={!editText.trim()}
+            >
+              {isEditing ? (
+                <AiOutlineCheck size={15} color="green" />
+              ) : (
+                <AiOutlineEdit size={15} />
+              )}
             </button>
-          </span>
+          </Btn>
         </Card>
       )}
     </Draggable>
