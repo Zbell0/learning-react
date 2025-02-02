@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
 import { IToDo, toDoState } from "../atom";
+import { todo } from "node:test";
+import { text } from "stream/consumers";
 
 const Card = styled.div<{ isDragging: boolean }>`
   padding: 5px 10px;
@@ -25,10 +27,9 @@ interface IDraggableProps {
 }
 
 function DraggableCard({ toDoId, toDoText, index }: IDraggableProps) {
+  const [isEditing, setEdit] = useState(false);
+  const [editText, setText] = useState(toDoText);
   const [toDos, setToDos] = useRecoilState(toDoState);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editText, setEditText] = useState(toDoText);
-
   const deleteBtn = () => {
     setToDos((prev) => {
       const newToDos = { ...prev };
@@ -44,9 +45,8 @@ function DraggableCard({ toDoId, toDoText, index }: IDraggableProps) {
   };
 
   const editBtn = () => {
-    setIsEditing(true);
+    setEdit(true);
   };
-
   const saveEdit = () => {
     setToDos((prev) => {
       const newToDos = { ...prev };
@@ -56,12 +56,10 @@ function DraggableCard({ toDoId, toDoText, index }: IDraggableProps) {
           toDo.id === toDoId ? { ...toDo, text: editText } : toDo
         );
       }
-
       return newToDos;
     });
-    setIsEditing(false);
+    setEdit(false);
   };
-
   return (
     <Draggable draggableId={toDoId + ""} index={index}>
       {(magic, snapshot) => (
@@ -75,7 +73,7 @@ function DraggableCard({ toDoId, toDoText, index }: IDraggableProps) {
             <input
               type="text"
               value={editText}
-              onChange={(e) => setEditText(e.target.value)}
+              onChange={(e) => setText(e.target.value)}
             />
           ) : (
             <span>{toDoText}</span>

@@ -22,7 +22,9 @@ interface IBoardProps {
 }
 
 const Title = styled.div`
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 15px;
   margin-bottom: 10px;
   font-weight: 600;
   font-size: 18px;
@@ -47,6 +49,7 @@ const Area = styled.div<IAreaProps>`
 const Form = styled.form`
   width: 100%;
   input {
+    border: none;
     width: 100%;
   }
 `;
@@ -66,14 +69,25 @@ function Board({ toDos, boardId }: IBoardProps) {
     setToDos((allBoards) => {
       return {
         ...allBoards,
-        [boardId]: [newToDo, ...allBoards[boardId]],
+        [boardId]: [...allBoards[boardId], newToDo],
       };
     });
     setValue("toDo", "");
   };
+  const deleteBoard = () => {
+    setToDos((allBoards) => {
+      const newBoards = { ...allBoards };
+      delete newBoards[boardId]; // Remove the board
+      return newBoards;
+    });
+  };
+
   return (
     <Wrapper>
-      <Title>{boardId}</Title>
+      <Title>
+        {boardId} <button onClick={deleteBoard}>x</button>
+      </Title>
+
       <Form onSubmit={handleSubmit(onValid)}>
         <input
           {...register("toDo", { required: true })}
