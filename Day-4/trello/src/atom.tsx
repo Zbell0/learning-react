@@ -21,5 +21,5 @@ export const toDoState = atom<IToDoState>({
   default: {
     Task: [],
   },
-  // effects_UNSTABLE: [persistAtom],
+  effects_UNSTABLE: [persistAtom],
 });
