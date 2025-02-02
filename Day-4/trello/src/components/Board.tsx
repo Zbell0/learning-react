@@ -14,18 +14,6 @@ const Wrapper = styled.div`
   height: 300px;
   display: flex;
   flex-direction: column;
-  button {
-    border: none;
-    padding: 5px 13px;
-    background-color: #ff8383;
-    border-radius: 2px;
-    transition: box-shadow 0.3s ease-in-out;
-    cursor: pointer;
-  }
-  button:hover {
-    outline: none;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.7);
-  }
 `;
 
 interface IBoardProps {
@@ -40,6 +28,18 @@ const Title = styled.div`
   margin-bottom: 10px;
   font-weight: 600;
   font-size: 18px;
+  button {
+    border: none;
+    padding: 5px 13px;
+    background-color: #ff8383;
+    border-radius: 2px;
+    transition: box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  button:hover {
+    outline: none;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  }
 `;
 
 interface IAreaProps {

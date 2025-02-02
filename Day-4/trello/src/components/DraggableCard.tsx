@@ -21,6 +21,16 @@ const Card = styled.div<{ isDragging: boolean }>`
 const Btn = styled.span`
   display: flex;
   gap: 5px;
+  button {
+    background-color: #f2efe7;
+    border: none;
+    transition: box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  button:hover {
+    outline: none;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  }
 `;
 
 interface IDraggableProps {
@@ -81,16 +91,16 @@ function DraggableCard({ toDoId, toDoText, index }: IDraggableProps) {
           )}
           <Btn>
             <button onClick={deleteBtn}>
-              <AiOutlineDelete size={15} color="red" />
+              <AiOutlineDelete size={20} color="red" />
             </button>
             <button
               onClick={isEditing ? saveEdit : editBtn}
               disabled={!editText.trim()}
             >
               {isEditing ? (
-                <AiOutlineCheck size={15} color="green" />
+                <AiOutlineCheck size={20} color="green" />
               ) : (
-                <AiOutlineEdit size={15} />
+                <AiOutlineEdit size={20} />
               )}
             </button>
           </Btn>
