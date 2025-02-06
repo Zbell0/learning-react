@@ -1,9 +1,15 @@
 import { createGlobalStyle } from "styled-components";
-import { delay, hover, motion } from "framer-motion";
+import {
+  delay,
+  hover,
+  motion,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
 import styled from "styled-components";
 import { start } from "repl";
 import { click } from "@testing-library/user-event/dist/click";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -71,38 +77,12 @@ const Box = styled(motion.div)`
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.1);
 `;
 
-const boxVariants = {
-  hover: { scale: 1.5, rotateZ: 90 },
-  click: { scale: 1, borderRadius: "100px" },
-};
-
-const BiggerBox = styled.div`
-  width: 600px;
-  height: 600px;
-  background-color: #e28080;
-  border-radius: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-`;
-
 function App() {
-  const biggerBoxRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const scale = useTransform(x, [-800, 0, 800], [2, 1, 0.1]);
   return (
     <Wrapper>
-      <BiggerBox ref={biggerBoxRef}>
-        <Box
-          drag
-          dragSnapToOrigin
-          dragElastic={0.5}
-          dragConstraints={biggerBoxRef}
-          variants={boxVariants}
-          // whileHover="hover"
-          whileTap="click"
-          // whileDrag="drag"
-        ></Box>
-      </BiggerBox>
+      <Box drag="x" dragSnapToOrigin style={{ x: x, scale }}></Box>
     </Wrapper>
   );
 }
