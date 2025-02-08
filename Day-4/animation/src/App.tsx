@@ -5,6 +5,7 @@ import {
   motion,
   useMotionValue,
   useTransform,
+  useViewportScroll,
 } from "framer-motion";
 import styled from "styled-components";
 import { start } from "repl";
@@ -60,9 +61,9 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const Wrapper = styled.div`
-  height: 100vh;
-  width: 100vw;
+const Wrapper = styled(motion.div)`
+  height: 200vh;
+  width: 500vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,10 +80,21 @@ const Box = styled(motion.div)`
 
 function App() {
   const x = useMotionValue(0);
-  const scale = useTransform(x, [-800, 0, 800], [2, 1, 0.1]);
+  const rotateZ = useTransform(x, [-800, 800], [-360, 360]);
+  const gradient = useTransform(
+    x,
+    [-800, 0, 800],
+    ["rgb(248, 245, 233)", "rgb(157, 192, 139)", "rgb(58, 125, 68)"]
+  );
+  const { scrollYProgress } = useViewportScroll();
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 3]);
   return (
-    <Wrapper>
-      <Box drag="x" dragSnapToOrigin style={{ x: x, scale }}></Box>
+    <Wrapper style={{ background: gradient }}>
+      <Box
+        drag="x"
+        dragSnapToOrigin
+        style={{ x: x, rotateZ: rotateZ, scale }}
+      ></Box>
     </Wrapper>
   );
 }
