@@ -11,60 +11,74 @@ const Wrapper = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 `;
 
-const svg = {
-  start: { pathLength: 0, fill: "rgba(255,255,255,0)" },
-  end: {
-    pathLength: 1,
-    fill: "rgba(255,255,255,1)",
-  },
-};
-
 const Box = styled(motion.div)`
-  position: absolute;
-  top: 100px;
+  position: abso lute;
+  top: 150px;
   width: 400px;
   height: 200px;
   background-color: white;
   border-radius: 15px;
-  box-shadow: 0, 2, 2, 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  position: absolute;
 `;
 
-const boxVarioants = {
-  initial: {
+const box = {
+  entry: (back: boolean) => ({
     opacity: 0,
     scale: 0,
-  },
-  visible: {
+    x: back ? -500 : 500,
+  }),
+  center: {
     opacity: 1,
     scale: 1,
-    rotateZ: 360,
+    x: 0,
+    transition: {
+      duration: 1,
+    },
   },
-  leaving: {
+  exit: (back: boolean) => ({
     opacity: 0,
     scale: 0,
-    y: 50,
-  },
+    x: back ? 500 : -500,
+    transition: {
+      duration: 1,
+    },
+  }),
 };
 
 function App() {
-  const [showing, setShowing] = useState(false);
-  const toggleShowing = () => setShowing((p) => !p);
+  const [visible, setVisible] = useState(1);
+  const [back, setBack] = useState(false);
+  const next = () => {
+    setBack(false);
+    setVisible((p) => (p === 10 ? 10 : p + 1));
+  };
+  const prev = () => {
+    setBack(true);
+    setVisible((p) => (p === 1 ? 1 : p - 1));
+  };
   return (
     <Wrapper>
-      <button onClick={toggleShowing}>click</button>
-      <AnimatePresence>
-        {showing ? (
-          <Box
-            transition={{ type: spring }}
-            variants={boxVarioants}
-            initial="initial"
-            animate="visible"
-            exit="leaving"
-          ></Box>
-        ) : null}
+      <AnimatePresence mode="wait" custom={back}>
+        <Box
+          custom={back}
+          variants={box}
+          initial="entry"
+          animate="center"
+          exit="exit"
+          key={visible}
+        >
+          {visible}
+        </Box>
       </AnimatePresence>
+      <button onClick={next}>next</button>
+      <button onClick={prev}>Previous</button>
     </Wrapper>
   );
 }
