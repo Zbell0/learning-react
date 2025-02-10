@@ -9,76 +9,43 @@ const Wrapper = styled(motion.div)`
   height: 100vh;
   width: 100vw;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  flex-direction: column;
+`;
+
+const Circle = styled(motion.div)`
+  background-color: #00a5ff;
+  height: 100px;
+  width: 100px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.1);
 `;
 
 const Box = styled(motion.div)`
-  position: abso lute;
-  top: 150px;
   width: 400px;
-  height: 200px;
-  background-color: white;
-  border-radius: 15px;
+  height: 400px;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
-  position: absolute;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.1);
 `;
 
-const box = {
-  entry: (back: boolean) => ({
-    opacity: 0,
-    scale: 0,
-    x: back ? -500 : 500,
-  }),
-  center: {
-    opacity: 1,
-    scale: 1,
-    x: 0,
-    transition: {
-      duration: 1,
-    },
-  },
-  exit: (back: boolean) => ({
-    opacity: 0,
-    scale: 0,
-    x: back ? 500 : -500,
-    transition: {
-      duration: 1,
-    },
-  }),
-};
-
 function App() {
-  const [visible, setVisible] = useState(1);
-  const [back, setBack] = useState(false);
-  const next = () => {
-    setBack(false);
-    setVisible((p) => (p === 10 ? 10 : p + 1));
-  };
-  const prev = () => {
-    setBack(true);
-    setVisible((p) => (p === 1 ? 1 : p - 1));
-  };
+  const [clicked, setClicked] = useState(false);
+  const toggleClicked = () => setClicked((p) => !p);
   return (
-    <Wrapper>
-      <AnimatePresence mode="wait" custom={back}>
-        <Box
-          custom={back}
-          variants={box}
-          initial="entry"
-          animate="center"
-          exit="exit"
-          key={visible}
-        >
-          {visible}
-        </Box>
-      </AnimatePresence>
-      <button onClick={next}>next</button>
-      <button onClick={prev}>Previous</button>
+    <Wrapper onClick={toggleClicked}>
+      <Box>
+        {!clicked ? (
+          <Circle layoutId="circle" style={{ borderRadius: 50 }}></Circle>
+        ) : null}
+      </Box>
+      <Box>
+        {clicked ? (
+          <Circle layoutId="circle" style={{ borderRadius: 0 }}></Circle>
+        ) : null}
+      </Box>
     </Wrapper>
   );
 }
