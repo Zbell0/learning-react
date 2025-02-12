@@ -1,0 +1,168 @@
+{
+  "coins": [
+    {
+      "id": "btc-bitcoin",
+      "name": "Bitcoin",
+      "symbol": "BTC",
+      "rank": 1,
+      "is_new": false,
+      "is_active": true,
+      "type": "coin"
+    },
+    {
+      "id": "eth-ethereum",
+      "name": "Ethereum",
+      "symbol": "ETH",
+      "rank": 2,
+      "is_new": false,
+      "is_active": true,
+      "type": "coin"
+    },
+    {
+      "id": "xrp-xrp",
+      "name": "XRP",
+      "symbol": "XRP",
+      "rank": 3,
+      "is_new": false,
+      "is_active": true,
+      "type": "coin"
+    },
+    {
+      "id": "usdt-tether",
+      "name": "Tether",
+      "symbol": "USDT",
+      "rank": 4,
+      "is_new": false,
+      "is_active": true,
+      "type": "token"
+    }
+  ],
+  "tickers": [
+    {
+      "id": "btc-bitcoin",
+      "name": "Bitcoin",
+      "symbol": "BTC",
+      "rank": 1,
+      "total_supply": 19806753,
+      "max_supply": 21000000,
+      "beta_value": 0.939382,
+      "first_data_at": "2010-07-17T00:00:00Z",
+      "last_updated": "2025-01-07T04:06:27Z",
+      "quotes": {
+        "USD": {
+          "price": 101816.461172348,
+          "volume_24h": 48518688099.4686,
+          "volume_24h_change_24h": 92.69,
+          "market_cap": 2016656654085,
+          "market_cap_change_24h": 2.48,
+          "percent_change_15m": 0.14,
+          "percent_change_30m": 0.06,
+          "percent_change_1h": 0.09,
+          "percent_change_6h": -0.07,
+          "percent_change_12h": -0.52,
+          "percent_change_24h": 2.48,
+          "percent_change_7d": 10.15,
+          "percent_change_30d": 2.68,
+          "percent_change_1y": 116.54,
+          "ath_price": 108263.61593263,
+          "ath_date": "2024-12-17T14:59:00Z",
+          "percent_from_price_ath": -5.97
+        }
+      }
+    },
+    {
+      "id": "eth-ethereum",
+      "name": "Ethereum",
+      "symbol": "ETH",
+      "rank": 2,
+      "total_supply": 120232214,
+      "max_supply": 0,
+      "beta_value": 1.12605,
+      "first_data_at": "2015-08-07T00:00:00Z",
+      "last_updated": "2025-01-07T04:06:27Z",
+      "quotes": {
+        "USD": {
+          "price": 3685.67835079949,
+          "volume_24h": 21578675345.2862,
+          "volume_24h_change_24h": 47.47,
+          "market_cap": 443852665748,
+          "market_cap_change_24h": 0.47,
+          "percent_change_15m": 0.04,
+          "percent_change_30m": 0.02,
+          "percent_change_1h": 0.05,
+          "percent_change_6h": 0.14,
+          "percent_change_12h": -1.16,
+          "percent_change_24h": 0.47,
+          "percent_change_7d": 10.48,
+          "percent_change_30d": -6.19,
+          "percent_change_1y": 59.35,
+          "ath_price": 4864.11319661424,
+          "ath_date": "2021-11-10T16:05:00Z",
+          "percent_from_price_ath": -24.22
+        }
+      }
+    },
+    {
+      "id": "xrp-xrp",
+      "name": "XRP",
+      "symbol": "XRP",
+      "rank": 3,
+      "total_supply": 99986708632,
+      "max_supply": 100000000000,
+      "beta_value": 0.993187,
+      "first_data_at": "2013-08-04T00:00:00Z",
+      "last_updated": "2025-01-07T04:06:27Z",
+      "quotes": {
+        "USD": {
+          "price": 2.41271208495563,
+          "volume_24h": 3682315907.67987,
+          "market_cap": 138608015793,
+          "market_cap_change_24h": 0.18,
+          "percent_change_15m": 0.31,
+          "percent_change_30m": 0.49,
+          "percent_change_1h": 0.46,
+          "percent_change_6h": 0.06,
+          "percent_change_12h": -1.52,
+          "percent_change_24h": 0.11,
+          "percent_change_7d": 19.31,
+          "percent_change_30d": -2.57,
+          "percent_change_1y": 319.53,
+          "ath_price": 3.84194,
+          "ath_date": "2018-01-04T07:14:00Z",
+          "percent_from_price_ath": -37.29
+        }
+      }
+    },
+    {
+      "id": "usdt-tether",
+      "name": "Tether",
+      "symbol": "USDT",
+      "rank": 4,
+      "total_supply": 142854383155,
+      "max_supply": 0,
+      "beta_value": -0.000498296,
+      "first_data_at": "2015-02-25T00:00:00Z",
+      "last_updated": "2025-01-07T04:06:27Z",
+      "quotes": {
+        "USD": {
+          "price": 1.00046626755644,
+          "volume_24h": 86231589129.1289,
+          "market_cap": 137584165705,
+          "market_cap_change_24h": 0.31,
+          "percent_change_15m": 0.02,
+          "percent_change_30m": 0,
+          "percent_change_1h": -0.01,
+          "percent_change_6h": -0.02,
+          "percent_change_12h": 0.01,
+          "percent_change_24h": 0.13,
+          "percent_change_7d": 0.15,
+          "percent_change_30d": 0.01,
+          "percent_change_1y": -0.08,
+          "ath_price": 1.21549,
+          "ath_date": "2015-02-25T17:04:00Z",
+          "percent_from_price_ath": -17.7
+        }
+      }
+    }
+  ]
+}
