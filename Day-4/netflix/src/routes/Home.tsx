@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { getMovies, IGetMoviesResult } from "../api";
 import styled from "styled-components";
 import { style } from "framer-motion/client";
 import { makeImagePath } from "../utils";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -35,23 +36,73 @@ const Overview = styled.p`
   font-size: 26px;
   width: 50%;
 `;
+const Slider = styled.div`
+  position: relative;
+  top: -100px;
+`;
+const Row = styled(motion.div)`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-bottom: 5px;
+  position: absolute;
+  width: 100%;
+`;
+const Box = styled(motion.div)`
+  background-color: white;
+  height: 200px;
+`;
+const rowVariants = {
+  hidden: {
+    x: window.innerWidth + 10,
+  },
+  visible: {
+    x: 0,
+  },
+  exit: {
+    x: -window.innerWidth - 10,
+  },
+};
 
 function Home() {
   const { data, isLoading } = useQuery<IGetMoviesResult>(
     ["movies", "nowPlaying"],
     getMovies
   );
-
+  const [index, setIndex] = useState(0);
+  const increaseIndex = () => setIndex((p) => p + 1);
   return (
     <Wrapper>
       {isLoading ? (
         <Loader>Loading..</Loader>
       ) : (
         <>
-          <Banner bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}>
+          <Banner
+            onClick={increaseIndex}
+            bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}
+          >
             <Title>{data?.results[0].title}</Title>
             <Overview>{data?.results[0].overview}</Overview>
           </Banner>
+          <Slider>
+            <AnimatePresence>
+              <Row
+                transition={{ type: "linear", duration: 1 }}
+                variants={rowVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                key={index}
+              >
+                <Box></Box>
+                <Box></Box>
+                <Box></Box>
+                <Box></Box>
+                <Box></Box>
+                <Box></Box>
+              </Row>
+            </AnimatePresence>
+          </Slider>
         </>
       )}
     </Wrapper>
