@@ -4,7 +4,7 @@ import { getMovies, IGetMoviesResult } from "../api";
 import styled from "styled-components";
 import { map, style } from "framer-motion/client";
 import { makeImagePath } from "../utils";
-import { AnimatePresence, delay, motion } from "framer-motion";
+import { AnimatePresence, delay, hover, motion } from "framer-motion";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -66,6 +66,21 @@ const Box = styled(motion.div)<{
     transform-origin: center right;
   }
 `;
+
+const Info = styled(motion.div)`
+  padding: 10px;
+  background-color: ${(props) => props.theme.black.lighter};
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  h4 {
+    text-align: center;
+    font-size: 18px;
+    color: white;
+  }
+`;
+
 const rowVariants = {
   hidden: {
     x: window.innerWidth + 5,
@@ -85,6 +100,17 @@ const boxVariants = {
   hover: {
     scale: 1.3,
     y: -50,
+    transition: {
+      delay: 0.5,
+      duration: 0.3,
+      type: "tween",
+    },
+  },
+};
+
+const infoVariants = {
+  hover: {
+    opacity: 1,
     transition: {
       delay: 0.5,
       duration: 0.3,
@@ -143,7 +169,11 @@ function Home() {
                       whileHover="hover"
                       key={i.id}
                       bgPhoto={makeImagePath(i.backdrop_path, "w500")}
-                    ></Box>
+                    >
+                      <Info variants={infoVariants}>
+                        <h4>{i.title}</h4>
+                      </Info>
+                    </Box>
                   ))}
               </Row>
             </AnimatePresence>
