@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { getMovies, IGetMoviesResult } from "../api";
 import styled from "styled-components";
-import { map, style } from "framer-motion/client";
+import { linearGradient, map, style } from "framer-motion/client";
 import { makeImagePath } from "../utils";
 import {
   AnimatePresence,
@@ -102,13 +102,37 @@ const Overlay = styled(motion.div)`
 `;
 
 const BigMovie = styled(motion.div)`
+  border-radius: 15px;
+  overflow: hidden;
   position: absolute;
   width: 40vw;
   height: 80vh;
-
+  background-color: ${(p) => p.theme.black.lighter};
   left: 0;
   right: 0;
   margin: 0 auto;
+`;
+
+const BigCover = styled.div`
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  height: 400px;
+`;
+
+const BigTitle = styled.h2`
+  color: ${(p) => p.theme.white.lighter};
+  padding: 10px;
+  position: relative;
+  top: -50px;
+  font-size: 28px;
+`;
+
+const BigOverview = styled.p`
+  padding: 20px;
+  color: ${(p) => p.theme.white.lighter};
+  position: relative;
+  top: -50px;
 `;
 
 const rowVariants = {
@@ -175,6 +199,13 @@ function Home() {
   const onOverlayClick = () => {
     history.push("/");
   };
+  const clickedMovie =
+    bigMovieMatch?.params.movieId &&
+    data?.results.find(
+      (movie) => movie.id + "" == bigMovieMatch.params.movieId
+    );
+  console.log(clickedMovie);
+
   return (
     <Wrapper>
       {isLoading ? (
@@ -233,7 +264,20 @@ function Home() {
                   layoutId={bigMovieMatch?.params.movieId}
                   style={{ top: scrollY.get() + 100 }}
                 >
-                  "hi"
+                  {clickedMovie && (
+                    <>
+                      <BigCover
+                        style={{
+                          backgroundImage: `linear-gradient(to top,  black,transparent), url(${makeImagePath(
+                            clickedMovie.backdrop_path,
+                            "w500"
+                          )})`,
+                        }}
+                      ></BigCover>
+                      <BigTitle>{clickedMovie.title}</BigTitle>
+                      <BigOverview>{clickedMovie.overview}</BigOverview>
+                    </>
+                  )}
                 </BigMovie>
               </>
             ) : null}
