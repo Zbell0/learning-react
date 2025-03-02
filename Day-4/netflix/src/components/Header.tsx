@@ -126,7 +126,6 @@ function Header() {
   const tvMatch = useRouteMatch("/tv");
   const inputAnimation = useAnimation();
   const navAnimation = useAnimation();
-  const { scrollY } = useScroll();
 
   const toggleSearch = () => {
     if (searchOpen) {
